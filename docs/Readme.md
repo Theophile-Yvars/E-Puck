@@ -67,7 +67,7 @@ source install/setup.bash
 ros2 run mon_robot_cpp mon_cerveau_cpp
 ```
 
-4. Architecture logicielle
+## 4. Architecture logicielle
 Le contrôleur repose sur une architecture asynchrone et événementielle :
 
 Nœud : intelligent_robot_cpp
@@ -78,7 +78,7 @@ Sorties (Publisher) : Envoie des vecteurs de vitesse sur /cmd_vel.
 
 Logique : Utilise des Callbacks pour mettre à jour l'état interne du robot sans bloquer la boucle de contrôle principale.
 
-5. Astuces Utiles
+## 5. Astuces Utiles
 Ajouter ROS 2 au démarrage : echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 
 Lister les capteurs actifs : ros2 topic list
