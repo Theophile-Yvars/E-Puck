@@ -1,5 +1,5 @@
 #include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/twist_stamped.hpp" // Changé pour TwistStamped
+#include "geometry_msgs/msg/twist_stamped.hpp"
 #include "sensor_msgs/msg/range.hpp"
 
 using namespace std::chrono_literals;
@@ -7,12 +7,10 @@ using namespace std::chrono_literals;
 class EpuckController : public rclcpp::Node {
 public:
     EpuckController() : Node("epuck_controller") {
-        RCLCPP_INFO(this->get_logger(), "=== Lancement du Contrôleur TwistStamped ===");
+        RCLCPP_INFO(this->get_logger(), "=== Contrôleur e-Puck (Capteurs Arrière Ignorés) ===");
 
-        // Publisher : Type TwistStamped pour ROS 2 Jazzy
         pub_vitesse = this->create_publisher<geometry_msgs::msg::TwistStamped>("/cmd_vel", 10);
 
-        // Subscribers : Capteurs de distance
         for (int i = 0; i < 8; i++) {
             std::string topic = "/ps" + std::to_string(i);
             subs_distance[i] = this->create_subscription<sensor_msgs::msg::Range>(
@@ -21,41 +19,68 @@ public:
                 });
         }
 
-        // Boucle de contrôle à 20Hz (toutes les 50ms)
+        sub_tof = this->create_subscription<sensor_msgs::msg::Range>(
+            "/tof", 10, [this](const sensor_msgs::msg::Range::SharedPtr msg) {
+                this->tof_val = msg->range;
+            });
+
         timer = this->create_wall_timer(50ms, std::bind(&EpuckController::control_loop, this));
     }
 
 private:
     void control_loop() {
         auto msg = geometry_msgs::msg::TwistStamped();
-
-        // Remplissage obligatoire du Header pour TwistStamped
         msg.header.stamp = this->get_clock()->now();
         msg.header.frame_id = "base_link";
 
-        // Lecture des capteurs avant
-        float avant_droit = dist_values[0];
-        float avant_gauche = dist_values[7];
-        float seuil = 0.05; // 5 cm
+        // --- FILTRAGE DES CAPTEURS ---
+        // On ignore ps4 et ps5 (arrière). 
+        // Droite : ps0, ps1, ps2
+        // Gauche : ps7, ps6 (ps5 est ignoré car arrière)
+        float prox_droite = (dist_values[0] + dist_values[1] + dist_values[2]) / 3.0;
+        float prox_gauche = (dist_values[6] + dist_values[7]) / 2.0;
 
-        if (avant_droit < seuil || avant_gauche < seuil) {
-            // Obstacle : On tourne
-            RCLCPP_WARN(this->get_logger(), "Obstacle détecté !");
-            msg.twist.linear.x = 0.0;
-            msg.twist.angular.z = 0.5;
-        } else {
-            // Libre : On avance
-            msg.twist.linear.x = 0.1;
-            msg.twist.angular.z = 0.0;
+        float v_lin = 0.5;
+        float v_ang = 0.0;
+        float seuil_urgence = 0.05; 
+
+        // 1. Détection d'obstacle proche (uniquement sur les 6 capteurs avant/côté)
+        bool obstacle_imminent = false;
+        // On vérifie 0, 1, 2, 3 (avant/droite) et 6, 7 (avant/gauche). On saute 4 et 5.
+        for(int i : {0, 1, 2, 3, 6, 7}) {
+            if (dist_values[i] < seuil_urgence && dist_values[i] > 0.001) {
+                obstacle_imminent = true;
+                break;
+            }
         }
 
+        if (obstacle_imminent) {
+            v_lin = 0.0;
+            // Si c'est plus bouché à droite, on tourne à gauche
+            v_ang = (prox_droite < prox_gauche) ? 1.5 : -1.5;
+            RCLCPP_WARN(this->get_logger(), "OBSTACLE AVANT ! Pivotement");
+        } 
+        else if (tof_val < 0.20) {
+            v_lin = 0.2; 
+            v_ang = (prox_droite < prox_gauche) ? 0.7 : -0.7;
+        } 
+        else {
+            v_lin = 0.6; // On peut même accélérer un peu ici
+            v_ang = (prox_droite - prox_gauche) * 2.0;
+        }
+
+        msg.twist.linear.x = v_lin;
+        msg.twist.angular.z = v_ang;
         pub_vitesse->publish(msg);
     }
 
     rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr pub_vitesse;
     rclcpp::Subscription<sensor_msgs::msg::Range>::SharedPtr subs_distance[8];
+    rclcpp::Subscription<sensor_msgs::msg::Range>::SharedPtr sub_tof;
     rclcpp::TimerBase::SharedPtr timer;
-    float dist_values[8] = {0.0};
+
+    float dist_values[8] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+    float tof_val = 2.0;
 };
 
 int main(int argc, char **argv) {
