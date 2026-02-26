@@ -1,5 +1,7 @@
 # E-Puck
 
+![Demo](demo.gif)
+
 ## 🤖 E-Puck ROS 2 Controller
 
 Ce dépôt contient le package ROS 2 pour le robot e-puck. 
