@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Compiler le projet
-echo "🔨 Compilation du package..."
+echo "Compilation du package..."
 cd ~/ros2_ws
 colcon build --packages-select mon_robot_cpp
 
@@ -9,5 +9,5 @@ colcon build --packages-select mon_robot_cpp
 source install/setup.bash
 
 # Lancer le contrôleur avec les bons arguments
-echo "🚀 Lancement du contrôleur C++..."
+echo "Lancement du contrôleur C++..."
 ros2 run mon_robot_cpp mon_cerveau_cpp --ros-args -p use_sim_time:=true

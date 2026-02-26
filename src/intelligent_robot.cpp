@@ -65,7 +65,7 @@ private:
             v_ang = (prox_droite < prox_gauche) ? 0.7 : -0.7;
         } 
         else {
-            v_lin = 0.6; // On peut même accélérer un peu ici
+            v_lin = 0.6; 
             v_ang = (prox_droite - prox_gauche) * 2.0;
         }
 

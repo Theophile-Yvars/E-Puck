@@ -1,10 +1,10 @@
-# 🤖 Contrôleur E-Puck ROS 2 (C++) - Guide Complet
+# Contrôleur E-Puck ROS 2 (C++) - Guide Complet
 
 Ce projet permet de piloter un robot e-puck dans **Webots** en utilisant **ROS 2 Jazzy**. Le contrôleur utilise une logique d'évitement d'obstacles basée sur les capteurs de proximité et communique via des messages synchronisés (`TwistStamped`).
 
 ---
 
-## 📁 Structure du Projet
+## Structure du Projet
 * **Package :** `mon_robot_cpp`
 * **Nœud :** `epuck_controller`
 * **Type de message :** `geometry_msgs/msg/TwistStamped`
@@ -12,7 +12,7 @@ Ce projet permet de piloter un robot e-puck dans **Webots** en utilisant **ROS 2
 
 ---
 
-## 🛠 1. Installation et Compilation
+## 1. Installation et Compilation
 
 ### Création du package (si non existant)
 ```bash
@@ -29,7 +29,7 @@ colcon build --packages-select mon_robot_cpp
 source install/setup.bash
 ```
 
-## 🚀 2. Lancement du Robot
+## 2. Lancement du Robot
 Le fonctionnement nécessite deux terminaux actifs simultanément.
 
 ### Étape 1 : Lancer la simulation (Terminal 1)
@@ -48,7 +48,7 @@ source install/setup.bash
 ros2 run mon_robot_cpp mon_cerveau_cpp --ros-args -p use_sim_time:=true
 ```
 
-### 🔍 3. Outils de Debugging (Commandes utiles)
+### 3. Outils de Debugging (Commandes utiles)
 
 #### Vérifier la connexion entre les nœuds
 Pour s'assurer que votre programme et Webots se "parlent" :
@@ -66,7 +66,7 @@ Données des capteurs entrants : ros2 topic echo /ps0
 #### Test forcé des moteurs
 Envoyer une commande manuelle pour tester la réactivité du robot :**
 
-### 💡 4. Concepts Clés
+### 4. Concepts Clés
 Pourquoi TwistStamped au lieu de Twist ?
 Dans ROS 2 Jazzy, le contrôleur de mouvement de l'e-puck (diffdrive_controller) exige une structure Stamped.
 

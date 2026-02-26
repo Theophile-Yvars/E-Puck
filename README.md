@@ -2,12 +2,12 @@
 
 ![Demo](assets/demo.gif)
 
-## 🤖 E-Puck ROS 2 Controller
+## E-Puck ROS 2 Controller
 
 Ce dépôt contient le package ROS 2 pour le robot e-puck. 
 **Attention :** Pour compiler ce projet, il doit impérativement être placé dans un dossier `src/` au sein d'un workspace ROS 2.
 
-### 📂 Structure attendue
+### Structure attendue
 Pour que `colcon build` fonctionne, votre dossier doit ressembler à ceci :
 ```text
 ros2_ws/
@@ -19,7 +19,7 @@ ros2_ws/
             └── intelligent_robot.cpp
 ```
 
-## 🚀 Installation Rapide
+## Installation Rapide
 ### Créer le workspace et cloner le projet :
 
 ```bash
@@ -35,7 +35,7 @@ colcon build --packages-select mon_robot_cpp
 source install/setup.bash
 ```
 
-### 🎮 Lancement
+### Lancement
 Lancer Webots (Terminal 1) :
 
 ```bash
@@ -51,7 +51,7 @@ source install/setup.bash
 ros2 run mon_robot_cpp mon_cerveau_cpp --ros-args -p use_sim_time:=true
 ```
 
-### 🛠 Debugging
+### Debugging
 Si le robot ne bouge pas, vérifiez la correspondance des messages :
 
 Topic : /cmd_vel
