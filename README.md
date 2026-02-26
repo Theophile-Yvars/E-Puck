@@ -37,13 +37,15 @@ source install/setup.bash
 Lancer Webots (Terminal 1) :
 
 ```bash
+source /opt/ros/jazzy/setup.bash
 ros2 launch webots_ros2_epuck robot_launch.py
 ```
 
-### Lancer le contrôleur (Terminal 2) :
+Lancer le contrôleur (Terminal 2) :
 
 ```bash
-# Le paramètre use_sim_time est vital pour la synchronisation
+cd ~/ros2_ws
+source install/setup.bash
 ros2 run mon_robot_cpp mon_cerveau_cpp --ros-args -p use_sim_time:=true
 ```
 
