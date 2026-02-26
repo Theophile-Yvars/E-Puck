@@ -1,6 +1,6 @@
 # E-Puck
 
-![Demo](demo.gif)
+![Demo](assets/demo.gif)
 
 ## 🤖 E-Puck ROS 2 Controller
 
