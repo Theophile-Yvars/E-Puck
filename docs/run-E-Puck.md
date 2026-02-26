@@ -90,3 +90,9 @@ ament_target_dependencies(mon_cerveau_cpp rclcpp geometry_msgs sensor_msgs)
 
 install(TARGETS mon_cerveau_cpp DESTINATION lib/${PROJECT_NAME})
 ```
+
+### 6. Le suivi des capteurs
+
+```bash
+ros2 run rqt_plot rqt_plot
+```
