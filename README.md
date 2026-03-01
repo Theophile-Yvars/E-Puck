@@ -29,15 +29,9 @@ ros2_ws/
 Le projet utilise l'outil colcon pour la compilation C++.
 
 ```bash
-# Créer l'espace de travail
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
-
-# Créer le package avec les dépendances nécessaires
 git clone https://github.com/Theophile-Yvars/ROS2-E-Puck.git E-Puck
-cd E-Puck
-chmod +x setup_workspace.sh
-./setup_workspace.sh
 ```
 
 ### Compiler le projet :
