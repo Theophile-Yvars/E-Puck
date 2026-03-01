@@ -23,14 +23,22 @@ ros2_ws/
             └── intelligent_robot.cpp
 ```
 
-## Installation Rapide
-### Créer le workspace et cloner le projet :
+## Installation
+
+### Créer le workspace et cloner le projet
+Le projet utilise l'outil colcon pour la compilation C++.
 
 ```bash
+# Créer l'espace de travail
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
+
+# Créer le package avec les dépendances nécessaires
+ros2 pkg create --build-type ament_cmake mon_robot_cpp --dependencies rclcpp geometry_msgs sensor_msgs
 git clone [https://github.com/Theophile-Yvars/ROS2-E-Puck.git](https://github.com/Theophile-Yvars/ROS2-E-Puck.git) E-Puck
+./setup_workspace.sh
 ```
+
 ### Compiler le projet :
 
 ```bash
@@ -63,3 +71,29 @@ Si le robot ne bouge pas, vérifiez la correspondance des messages :
 Topic : /cmd_vel
 
 Type : geometry_msgs/msg/TwistStamped
+
+## Astuces Utiles
+
+Ajouter ROS 2 au démarrage : echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+
+Lister les capteurs actifs : ros2 topic list
+
+Vérifier les données d'un capteur : ros2 topic echo /ps0
+
+Pour s'assurer que votre programme et Webots se "parlent" (**Succès si : Publisher count: 1 (votre code) et Subscription count: 1 (Webots).) : ros2 topic info /cmd_vel --verbose
+
+Le suivi des capteurs : ros2 run rqt_plot rqt_plot
+
+Ordres de vitesse sortants : ros2 topic echo /cmd_vel
+
+## Architecture logicielle
+
+Le contrôleur repose sur une architecture asynchrone et événementielle :
+
+Nœud : intelligent_robot_cpp
+
+Entrées (Subscribers) : Écoute les capteurs de proximité /ps0 à /ps7.
+
+Sorties (Publisher) : Envoie des vecteurs de vitesse sur /cmd_vel.
+
+Logique : Utilise des Callbacks pour mettre à jour l'état interne du robot sans bloquer la boucle de contrôle principale.

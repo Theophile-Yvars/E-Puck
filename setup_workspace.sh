@@ -15,16 +15,3 @@ if [ -d "~/E-Puck" ]; then
     mv ~/E-Puck ~/$WS_NAME/src/
     echo "Package déplacé dans $WS_NAME/src/"
 fi
-
-# 4. Installation des dépendances système
-cd ~/$WS_NAME
-sudo apt update
-rosdep update
-rosdep install --from-paths src --ignore-src -y
-
-# 5. Première compilation
-echo "Compilation initiale..."
-source /opt/ros/jazzy/setup.bash
-colcon build
-
-echo "Setup terminé ! Pense à faire : source install/setup.bash"
