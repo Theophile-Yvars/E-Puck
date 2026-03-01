@@ -36,6 +36,8 @@ cd ~/ros2_ws/src
 # Créer le package avec les dépendances nécessaires
 ros2 pkg create --build-type ament_cmake mon_robot_cpp --dependencies rclcpp geometry_msgs sensor_msgs
 git clone https://github.com/Theophile-Yvars/ROS2-E-Puck.git E-Puck
+cd E-Puck
+chmod +x setup_workspace.sh
 ./setup_workspace.sh
 ```
 
