@@ -4,7 +4,7 @@
 
 ## Installation de l'environnement
 
-Tous les détails se trouvent dans ce [Document](./docs/README.md)
+Tous les détails se trouvent dans ce [Document](./docs/Readme.md)
 
 ## E-Puck ROS 2 Controller
 
