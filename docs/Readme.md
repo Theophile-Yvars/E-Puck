@@ -11,6 +11,10 @@ Ce projet implémente un contrôleur de robot autonome en **C++** pour le robot 
 * **Simulateur :** Webots
 * **Middleware :** ROS 2 Jazzy Jalisco
 
+### Installation de Webots
+
+https://cyberbotics.com/
+
 ### Installation de ROS 2 et des outils C++
 Exécutez ces commandes pour configurer les dépôts et installer l'écosystème de build :
 
@@ -41,33 +45,9 @@ cd ~/ros2_ws/src
 
 # Créer le package avec les dépendances nécessaires
 ros2 pkg create --build-type ament_cmake mon_robot_cpp --dependencies rclcpp geometry_msgs sensor_msgs
-
-# Compiler
-cd ~/ros2_ws
-colcon build
 ```
 
-## 3. Lancement du Projet
-Chaque terminal doit être "sourcé" pour reconnaître les commandes ROS 2.
-
-Terminal 1 : La Simulation
-Lance Webots et le bridge ROS 2 :
-
-```bash
-source /opt/ros/jazzy/setup.bash
-ros2 launch webots_ros2_epuck robot_launch.py
-```
-Terminal 2 : Le Contrôleur C++
-Compile et lance ton code :
-
-```bash
-cd ~/ros2_ws
-source /opt/ros/jazzy/setup.bash
-source install/setup.bash
-ros2 run mon_robot_cpp mon_cerveau_cpp
-```
-
-## 4. Architecture logicielle
+## 3. Architecture logicielle
 Le contrôleur repose sur une architecture asynchrone et événementielle :
 
 Nœud : intelligent_robot_cpp
@@ -78,9 +58,15 @@ Sorties (Publisher) : Envoie des vecteurs de vitesse sur /cmd_vel.
 
 Logique : Utilise des Callbacks pour mettre à jour l'état interne du robot sans bloquer la boucle de contrôle principale.
 
-## 5. Astuces Utiles
+## 4. Astuces Utiles
 Ajouter ROS 2 au démarrage : echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 
 Lister les capteurs actifs : ros2 topic list
 
 Vérifier les données d'un capteur : ros2 topic echo /ps0
+
+Pour s'assurer que votre programme et Webots se "parlent" (**Succès si : Publisher count: 1 (votre code) et Subscription count: 1 (Webots).) : ros2 topic info /cmd_vel --verbose
+
+Le suivi des capteurs : ros2 run rqt_plot rqt_plot
+
+Ordres de vitesse sortants : ros2 topic echo /cmd_vel

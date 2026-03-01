@@ -2,6 +2,10 @@
 
 ![Demo](assets/demo.gif)
 
+## Installation de l'environnement
+
+Tous les détails se trouvent dans ce [Document](./docs/README.md)
+
 ## E-Puck ROS 2 Controller
 
 Ce dépôt contient le package ROS 2 pour le robot e-puck. 
@@ -25,7 +29,7 @@ ros2_ws/
 ```bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
-git clone [https://github.com/TON_PSEUDO/ros2_ws.git](https://github.com/TON_PSEUDO/ros2_ws.git) E-Puck
+git clone [https://github.com/Theophile-Yvars/ROS2-E-Puck.git](https://github.com/Theophile-Yvars/ROS2-E-Puck.git) E-Puck
 ```
 ### Compiler le projet :
 
@@ -36,14 +40,16 @@ source install/setup.bash
 ```
 
 ### Lancement
-Lancer Webots (Terminal 1) :
+Terminal 1 : La Simulation
+Lance Webots et le bridge ROS 2 :
 
 ```bash
 source /opt/ros/jazzy/setup.bash
 ros2 launch webots_ros2_epuck robot_launch.py
 ```
 
-Lancer le contrôleur (Terminal 2) :
+Terminal 2 : Le Contrôleur C++
+Compile et lance ton code :
 
 ```bash
 cd ~/ros2_ws
