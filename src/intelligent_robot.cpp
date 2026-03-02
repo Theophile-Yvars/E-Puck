@@ -9,8 +9,18 @@ public:
     EpuckController() : Node("epuck_controller") {
         RCLCPP_INFO(this->get_logger(), "=== Contrôleur e-Puck (Capteurs Arrière Ignorés) ===");
 
+        /*
+        Publication sur le topic /cmd_vel pour envoyer les commandes de vitesse angulaire.
+        */
         pub_vitesse = this->create_publisher<geometry_msgs::msg::TwistStamped>("/cmd_vel", 10);
 
+        /*
+        Abandon des capteurs de proximité arrière (ps4 et ps5). 
+         - ps0, ps1, ps2 : avant/droite
+         - ps3 : avant/droite (mais plus proche du centre)
+         - ps6, ps7 : avant/gauche
+         - ps4, ps5 : arrière (ignorés)
+        */
         for (int i = 0; i < 8; i++) {
             std::string topic = "/ps" + std::to_string(i);
             subs_distance[i] = this->create_subscription<sensor_msgs::msg::Range>(
@@ -19,11 +29,19 @@ public:
                 });
         }
 
+        /*
+        Abandon du capteur ToF. 
+        Capteur situé à l'avant, il peut détecter des obstacles plus loin que les capteurs de proximité.
+        */
         sub_tof = this->create_subscription<sensor_msgs::msg::Range>(
             "/tof", 10, [this](const sensor_msgs::msg::Range::SharedPtr msg) {
                 this->tof_val = msg->range;
             });
 
+
+        /*
+        Timer de contrôle à 20 Hz (50 ms) pour exécuter la boucle de contrôle.
+        */
         timer = this->create_wall_timer(50ms, std::bind(&EpuckController::control_loop, this));
     }
 

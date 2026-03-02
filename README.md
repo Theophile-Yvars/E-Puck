@@ -2,6 +2,10 @@
 
 ![Demo](assets/demo.gif)
 
+## Documentation sur le e-puck
+
+https://cyberbotics.com/doc/guide/epuck?version=R2022b
+
 ## Installation de l'environnement
 
 Tous les détails se trouvent dans ce [Document](./docs/Readme.md)
