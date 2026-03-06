@@ -1,6 +1,6 @@
 # E-Puck
 
-![Demo](assets/demo.gif)
+![Demo](assets/epuck.jpeg)
 
 ## Documentation sur le e-puck
 
@@ -20,11 +20,22 @@ Pour que `colcon build` fonctionne, votre dossier doit ressembler à ceci :
 ```text
 ros2_ws/
 └── src/
-    └── E-Puck/ (Ce dépôt)
-        ├── CMakeLists.txt
-        ├── package.xml
-        └── src/
-            └── intelligent_robot.cpp
+    └── E-Puck/ 
+        ├── README.md
+        ├── assets/
+        ├── docs/
+        ├── scripts/
+        └── feature/
+            ├── blink_led/ (Package ROS 2 n°1)
+            │   ├── CMakeLists.txt
+            │   ├── package.xml
+            │   └── src/
+            │       └── blink_led.cpp
+            └── wall_avoidance/ (Package ROS 2 n°2)
+                ├── CMakeLists.txt
+                ├── package.xml
+                └── src/
+                    └── intelligent_robot.cpp
 ```
 
 ## Installation
@@ -38,11 +49,16 @@ cd ~/ros2_ws/src
 git clone https://github.com/Theophile-Yvars/ROS2-E-Puck.git E-Puck
 ```
 
+# Feature Wall Avoidance
+
+
+![Demo](assets/demo.gif)
+
 ### Compiler le projet :
 
 ```bash
 cd ~/ros2_ws
-colcon build --packages-select mon_robot_cpp
+colcon build --packages-select mon_robot_cpp_wall_avoidance
 source install/setup.bash
 ```
 
@@ -61,17 +77,48 @@ Compile et lance ton code :
 ```bash
 cd ~/ros2_ws
 source install/setup.bash
-ros2 run mon_robot_cpp mon_cerveau_cpp --ros-args -p use_sim_time:=true
+ros2 run mon_robot_cpp_wall_avoidance mon_cerveau_cpp_wall_avoidance --ros-args -p use_sim_time:=true
 ```
 
-### Debugging
+# Feature Blink Led
+
+![Demo](assets/demo_blink.gif)
+
+### Compiler le projet :
+
+```bash
+cd ~/ros2_ws
+colcon build --packages-select mon_robot_cpp_blink_led
+source install/setup.bash
+```
+
+### Lancement
+Terminal 1 : La Simulation
+Lance Webots et le bridge ROS 2 :
+
+```bash
+source /opt/ros/jazzy/setup.bash
+ros2 launch webots_ros2_epuck robot_launch.py
+```
+
+Terminal 2 : Le Contrôleur C++
+Compile et lance ton code :
+
+```bash
+cd ~/ros2_ws
+source install/setup.bash
+ros2 run mon_robot_cpp_blink_led mon_cerveau_cpp_blink_led --ros-args -p use_sim_time:=true
+```
+
+
+# Debugging
 Si le robot ne bouge pas, vérifiez la correspondance des messages :
 
 Topic : /cmd_vel
 
 Type : geometry_msgs/msg/TwistStamped
 
-## Astuces Utiles
+# Astuces Utiles
 
 Ajouter ROS 2 au démarrage : echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 
@@ -85,7 +132,7 @@ Le suivi des capteurs : ros2 run rqt_plot rqt_plot
 
 Ordres de vitesse sortants : ros2 topic echo /cmd_vel
 
-## Architecture logicielle
+# Architecture logicielle
 
 Le contrôleur repose sur une architecture asynchrone et événementielle :
 

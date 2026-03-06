@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>mon_robot_cpp</name>
+  <name>mon_robot_cpp_wall_avoidance</name>
   <version>0.0.1</version>
   <description>Contrôleur d'évitement d'obstacles pour e-puck sous Webots</description>
   <maintainer email="votre@email.com">yvars</maintainer>
