@@ -69,14 +69,44 @@ source install/setup.bash
 ros2 run mon_robot_cpp_wall_avoidance mon_cerveau_cpp_wall_avoidance --ros-args -p use_sim_time:=true
 ```
 
-### Debugging
+# Feature Blink Led
+
+
+### Compiler le projet :
+
+```bash
+cd ~/ros2_ws
+colcon build --packages-select mon_robot_cpp_blink_led
+source install/setup.bash
+```
+
+### Lancement
+Terminal 1 : La Simulation
+Lance Webots et le bridge ROS 2 :
+
+```bash
+source /opt/ros/jazzy/setup.bash
+ros2 launch webots_ros2_epuck robot_launch.py
+```
+
+Terminal 2 : Le Contrôleur C++
+Compile et lance ton code :
+
+```bash
+cd ~/ros2_ws
+source install/setup.bash
+ros2 run mon_robot_cpp_blink_led mon_cerveau_cpp_blink_led --ros-args -p use_sim_time:=true
+```
+
+
+# Debugging
 Si le robot ne bouge pas, vérifiez la correspondance des messages :
 
 Topic : /cmd_vel
 
 Type : geometry_msgs/msg/TwistStamped
 
-## Astuces Utiles
+# Astuces Utiles
 
 Ajouter ROS 2 au démarrage : echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 
