@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(mon_robot_cpp)
+project(mon_robot_cpp_wall_avoidance)
 
 # 1. Standard C++ (Requis pour ROS 2 Jazzy)
 if(NOT CMAKE_CXX_STANDARD)
@@ -13,12 +13,12 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
 # 3. Création de l'exécutable
-# On crée le programme "mon_cerveau_cpp" à partir du fichier source
-add_executable(mon_cerveau_cpp src/intelligent_robot.cpp)
+# On crée le programme "mon_cerveau_cpp_wall_avoidance" à partir du fichier source
+add_executable(mon_cerveau_cpp_wall_avoidance src/intelligent_robot.cpp)
 
 # 4. Définition des dépendances cibles
 # Cela lie ton code aux bibliothèques rclcpp, geometry_msgs (pour TwistStamped) et sensor_msgs (pour Range)
-ament_target_dependencies(mon_cerveau_cpp
+ament_target_dependencies(mon_cerveau_cpp_wall_avoidance
   rclcpp
   geometry_msgs
   sensor_msgs
@@ -27,7 +27,7 @@ ament_target_dependencies(mon_cerveau_cpp
 # 5. Installation de l'exécutable
 # Permet à la commande 'ros2 run' de trouver ton programme après la compilation
 install(TARGETS
-  mon_cerveau_cpp
+  mon_cerveau_cpp_wall_avoidance
   DESTINATION lib/${PROJECT_NAME}
 )
 
