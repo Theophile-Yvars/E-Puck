@@ -7,7 +7,7 @@ using namespace std::chrono_literals;
 
 class EPunkController : public rclcpp::Node {
 public:
-    EPunkController() : Node("epuck-v2"){
+    EPunkController() : Node("epuck_blink_led") {
         pub_led0 = this->create_publisher<std_msgs::msg::Int32>("/led0", 1);
         message.data = 0; // Initialement éteint
         timer = this->create_wall_timer(50ms, std::bind(&EPunkController::control_loop, this));
