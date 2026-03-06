@@ -1,6 +1,6 @@
 # E-Puck
 
-![Demo](assets/demo.gif)
+![Demo](assets/epuck.jpeg)
 
 ## Documentation sur le e-puck
 
@@ -38,11 +38,16 @@ cd ~/ros2_ws/src
 git clone https://github.com/Theophile-Yvars/ROS2-E-Puck.git E-Puck
 ```
 
+# Feature Wall Avoidance
+
+
+![Demo](assets/demo.gif)
+
 ### Compiler le projet :
 
 ```bash
 cd ~/ros2_ws
-colcon build --packages-select mon_robot_cpp
+colcon build --packages-select mon_robot_cpp_wall_avoidance
 source install/setup.bash
 ```
 
@@ -61,7 +66,7 @@ Compile et lance ton code :
 ```bash
 cd ~/ros2_ws
 source install/setup.bash
-ros2 run mon_robot_cpp mon_cerveau_cpp --ros-args -p use_sim_time:=true
+ros2 run mon_robot_cpp_wall_avoidance mon_cerveau_cpp_wall_avoidance --ros-args -p use_sim_time:=true
 ```
 
 ### Debugging
