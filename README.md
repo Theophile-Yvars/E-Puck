@@ -71,6 +71,7 @@ ros2 run mon_robot_cpp_wall_avoidance mon_cerveau_cpp_wall_avoidance --ros-args 
 
 # Feature Blink Led
 
+![Demo](assets/demo_blink.gif)
 
 ### Compiler le projet :
 
@@ -120,7 +121,7 @@ Le suivi des capteurs : ros2 run rqt_plot rqt_plot
 
 Ordres de vitesse sortants : ros2 topic echo /cmd_vel
 
-## Architecture logicielle
+# Architecture logicielle
 
 Le contrôleur repose sur une architecture asynchrone et événementielle :
 
