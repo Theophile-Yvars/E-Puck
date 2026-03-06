@@ -8,6 +8,7 @@ class EPunkController : public rclcpp::Node {
 public:
     EPunkController() : Node("epuck-v2"){
         pub_led0 = this->create_publisher<std_msgs::msg::Int32>("/led0", 1);
+        message.data = 0; // Initialement éteint
         timer = this->create_wall_timer(50ms, std::bind(&EpuckController::control_loop, this));
     }
 
@@ -31,7 +32,7 @@ private:
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr pub_led0;
     rclcpp::TimerBase::SharedPtr timer;
     int counter = 0;
-    auto message = std_msgs::msg::Int32();
+    std_msgs::msg::Int32 message = std_msgs::msg::Int32();
 };
 
 int main(int argc, char * argv[]) {
