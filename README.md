@@ -20,11 +20,22 @@ Pour que `colcon build` fonctionne, votre dossier doit ressembler à ceci :
 ```text
 ros2_ws/
 └── src/
-    └── E-Puck/ (Ce dépôt)
-        ├── CMakeLists.txt
-        ├── package.xml
-        └── src/
-            └── intelligent_robot.cpp
+    └── E-Puck/ 
+        ├── README.md
+        ├── assets/
+        ├── docs/
+        ├── scripts/
+        └── feature/
+            ├── blink_led/ (Package ROS 2 n°1)
+            │   ├── CMakeLists.txt
+            │   ├── package.xml
+            │   └── src/
+            │       └── blink_led.cpp
+            └── wall_avoidance/ (Package ROS 2 n°2)
+                ├── CMakeLists.txt
+                ├── package.xml
+                └── src/
+                    └── intelligent_robot.cpp
 ```
 
 ## Installation
